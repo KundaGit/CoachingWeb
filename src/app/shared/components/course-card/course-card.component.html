@@ -1,0 +1,56 @@
+<div class="card">
+  <h4>Class 10 Maths</h4>
+  <p>Complete syllabus + tests</p>
+  <button>View Course</button>
+  <button (click)="payNow()" [hidden]="isPaidUser()">Pay ₹199</button>
+</div>
+
+<!-- Course Card Component -->
+ <div class="course-page">
+
+  <!-- HEADER -->
+  <div class="course-header">
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.description }}</p>
+    <span class="badge">Class 9–10</span>
+  </div>
+
+  <!-- COURSE INFO -->
+  <div class="info-box">
+    <div>
+      <strong>Teacher</strong>
+      <p>{{ course.teacher }}</p>
+    </div>
+    <div>
+      <strong>Duration</strong>
+      <p>{{ course.duration }}</p>
+    </div>
+    <div>
+      <strong>Price</strong>
+      <p>₹{{ course.price }}</p>
+    </div>
+  </div>
+
+  <!-- CHAPTER LIST -->
+  <div class="chapters">
+    <h3>Course Content</h3>
+
+    <div
+      class="chapter"
+      *ngFor="let ch of course.chapters"
+      [class.locked]="!ch.free && !isPaid"
+    >
+      <span>{{ ch.name }}</span>
+
+      <span class="status" *ngIf="ch.free">FREE</span>
+      <span class="status lock" *ngIf="!ch.free && !isPaid">🔒 Locked</span>
+      <span class="status unlock" *ngIf="isPaid">▶ Watch</span>
+    </div>
+  </div>
+
+  <!-- BUY BUTTON -->
+  <button class="buy-btn" *ngIf="!isPaid" (click)="payNow()">
+    Buy Course ₹{{ course.price }}
+  </button>
+
+</div>

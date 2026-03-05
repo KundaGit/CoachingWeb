@@ -1,0 +1,85 @@
+<div class="app-wrapper">
+  <!-- ===== TOP BAR ===== -->
+<header class="topbar">
+  <div class="logo" routerLink="/home">Institute App</div>
+
+  <div class="user-menu" *ngIf="auth.isLoggedIn()">
+
+<!-- 🔔 NOTIFICATION BELL -->
+<div class="notif-menu">
+
+  <div class="bell" (click)="toggleNotifications()">
+    🔔
+    <span class="badge" *ngIf="unreadCount > 0">
+      {{ unreadCount }}
+    </span>
+  </div>
+
+  <!-- DROPDOWN -->
+  <div class="notif-dropdown" *ngIf="isNotifOpen">
+
+    <div class="notif-header">
+      Notifications
+      <span class="mark-read" (click)="markAllRead()">Mark all read</span>
+    </div>
+
+    <div class="notif-item"
+         *ngFor="let n of notifications"
+         [class.unread]="!n.read">
+      {{ n.text }}
+    </div>
+
+    <div class="notif-empty" *ngIf="notifications.length === 0">
+      No notifications
+    </div>
+
+  </div>
+</div>
+
+    <!-- AVATAR -->
+    <div class="avatar" (click)="toggleDropdown()" title="{{ userEmail }}">
+      <img *ngIf="userAvatar; else initials" [src]="userAvatar" />
+      <ng-template #initials>
+        {{ userInitial }}
+      </ng-template>
+    </div>
+
+    <!-- DROPDOWN -->
+    <div class="dropdown" *ngIf="isDropdownOpen">
+      <div class="dropdown-header">
+        {{ userEmail }}
+      </div>
+
+      <div class="dropdown-item" (click)="goToProfile()">
+        👤 Profile
+      </div>
+
+      <div class="dropdown-item logout" (click)="logout()">
+        🚪 Logout
+      </div>
+    </div>
+
+  </div>
+</header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- ===== BOTTOM NAV ===== -->
+  <nav class="bottom-nav" *ngIf="auth.isLoggedIn()">
+    <a routerLink="/home" routerLinkActive="active">
+      <span class="icon">🏠</span>
+      <span>Home</span>
+    </a>
+    <a routerLink="/courses" routerLinkActive="active">
+      <span class="icon">📚</span>
+      <span>Courses</span>
+    </a>
+    <a routerLink="/profile" routerLinkActive="active">
+      <span class="icon">👤</span>
+      <span>Profile</span>
+    </a>
+  </nav>
+</div>

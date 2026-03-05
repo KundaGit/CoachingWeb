@@ -1,0 +1,169 @@
+<div class="profile-page">
+
+  <!-- ================= HEADER ================= -->
+  <div class="profile-header">
+    <h3>Profile Detail</h3>
+
+    <!-- EDIT BUTTON -->
+    <button class="edit-btn" *ngIf="!editMode" (click)="enableEdit()">
+      <i class="bi bi-pencil"></i> Edit
+    </button>
+
+    <!-- SAVE / CANCEL -->
+    <div class="edit-actions" *ngIf="editMode">
+      <button class="save-btn" (click)="saveProfile()">Save</button>
+      <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ================= PROFILE LAYOUT ================= -->
+  <div class="profile-layout">
+
+    <!-- ========== LEFT : AVATAR ========== -->
+    <div class="profile-left">
+
+  <!-- AVATAR -->
+  <div class="avatar-wrapper" (click)="fileInput.click()">
+
+    <div class="avatar large">
+      <img *ngIf="avatar; else initials" [src]="avatar" />
+      <ng-template #initials>{{ userInitial }}</ng-template>
+
+      <span class="camera-icon">
+        <i class="bi bi-camera"></i>
+      </span>
+    </div>
+
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      hidden
+      (change)="onAvatarChange($event)"
+    />
+  </div>
+
+  <!-- 👇 THIS MUST BE OUTSIDE avatar-wrapper -->
+  <div class="user-info">
+    <div class="user-name">
+      {{ user.name || 'Student Name' }}
+    </div>
+
+    <div class="user-email">
+      {{ user.email || 'email@example.com' }}
+    </div>
+  </div>
+
+</div>
+
+    <!-- ========== RIGHT : DETAILS ========== -->
+    <div class="profile-right">
+
+      <!-- ===== PERSONAL DETAILS ===== -->
+      <h4 class="section-title">Personal Details</h4>
+
+      <div class="detail-row">
+        <span class="label">Name</span>
+        <span *ngIf="!editMode">{{ user.name }}</span>
+        <input *ngIf="editMode" [(ngModel)]="user.name" />
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Mobile No</span>
+        <span *ngIf="!editMode">{{ user.mobile }}</span>
+        <input *ngIf="editMode" [(ngModel)]="user.mobile" />
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Email</span>
+        <span>{{ user.email }}</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Living City/Village/Town</span>
+        <span *ngIf="!editMode">{{ user.city || 'N/A' }}</span>
+        <input *ngIf="editMode" [(ngModel)]="user.city" />
+      </div>
+
+      <!-- ===== ACADEMIC DETAILS ===== -->
+      <h4 class="section-title">Academic Details</h4>
+
+      <div class="detail-row">
+        <span class="label">Class</span>
+        <span *ngIf="!editMode">{{ user.class || 'N/A' }}</span>
+        <input *ngIf="editMode" [(ngModel)]="user.class" />
+      </div>
+
+   <div class="detail-row">
+  <span class="label">State</span>
+
+  <!-- VIEW MODE -->
+  <span *ngIf="!editMode">
+    {{ user.state || 'N/A' }}
+  </span>
+
+  <!-- EDIT MODE -->
+  <select *ngIf="editMode" [(ngModel)]="user.state">
+    <option value="">Select State</option>
+
+    <option value="Andhra Pradesh">Andhra Pradesh</option>
+    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+    <option value="Assam">Assam</option>
+    <option value="Bihar">Bihar</option>
+    <option value="Chhattisgarh">Chhattisgarh</option>
+    <option value="Goa">Goa</option>
+    <option value="Gujarat">Gujarat</option>
+    <option value="Haryana">Haryana</option>
+    <option value="Himachal Pradesh">Himachal Pradesh</option>
+    <option value="Jharkhand">Jharkhand</option>
+    <option value="Karnataka">Karnataka</option>
+    <option value="Kerala">Kerala</option>
+    <option value="Madhya Pradesh">Madhya Pradesh</option>
+    <option value="Maharashtra">Maharashtra</option>
+    <option value="Manipur">Manipur</option>
+    <option value="Meghalaya">Meghalaya</option>
+    <option value="Mizoram">Mizoram</option>
+    <option value="Nagaland">Nagaland</option>
+    <option value="Odisha">Odisha</option>
+    <option value="Punjab">Punjab</option>
+    <option value="Rajasthan">Rajasthan</option>
+    <option value="Sikkim">Sikkim</option>
+    <option value="Tamil Nadu">Tamil Nadu</option>
+    <option value="Telangana">Telangana</option>
+    <option value="Tripura">Tripura</option>
+    <option value="Uttar Pradesh">Uttar Pradesh</option>
+    <option value="Uttarakhand">Uttarakhand</option>
+    <option value="West Bengal">West Bengal</option>
+  </select>
+</div>
+
+      <div class="detail-row">
+        <span class="label">Exams</span>
+        <span>{{ user.exam }}</span>
+      </div>
+
+      <!-- ===== LANGUAGE (NEW) ===== -->
+      <div class="detail-row">
+        <span class="label">Language</span>
+
+        <span *ngIf="!editMode">
+          {{ user.language || 'N/A' }}
+        </span>
+
+        <select *ngIf="editMode" [(ngModel)]="user.language">
+          <option value="">Select</option>
+          <option value="Hindi">Hindi</option>
+          <option value="English">English</option>
+          <option value="Hindi + English">Hindi + English</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+  <!-- ================= LOGOUT (BOTTOM) ================= -->
+<div class="logout-section">
+  <button class="logout-btn" (click)="logout()">
+    Logout
+  </button>
+</div>
+</div>

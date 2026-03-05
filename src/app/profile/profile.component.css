@@ -1,0 +1,289 @@
+/* ================= PAGE ================= */
+.profile-page {
+  padding: 24px;
+  background: #f4f6fb;
+  min-height: 100vh;
+}
+
+/* ================= HEADER ================= */
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* ================= LAYOUT ================= */
+.profile-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 30px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 14px;
+}
+
+/* ================= LEFT ================= */
+.profile-left {
+  text-align: center;
+}
+
+/* ================= AVATAR ================= */
+.avatar-wrapper {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.avatar {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #4f46e5, #2563eb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* CAMERA ICON */
+.camera-icon {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 28px;
+  height: 28px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* ================= RIGHT ================= */
+.section-title {
+  margin: 18px 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ================= DETAIL ROW ================= */
+.detail-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.detail-row .label {
+  color: #6b7280;
+}
+
+/* INPUTS */
+.detail-row input,
+.detail-row select {
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* ================= EDIT BUTTON ================= */
+.edit-btn {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* SAVE / CANCEL */
+.edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.save-btn {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* ================= RESPONSIVE (PW STYLE) ================= */
+@media (max-width: 768px) {
+
+  .profile-page {
+    padding: 16px;
+  }
+
+  .profile-layout {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .profile-left {
+    display: flex;
+    justify-content: center;
+  }
+
+  .avatar {
+    width: 96px;
+    height: 96px;
+    font-size: 32px;
+  }
+
+  .detail-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .detail-row .label {
+    font-size: 12px;
+  }
+
+  .detail-row span,
+  .detail-row input,
+  .detail-row select {
+    font-size: 14px;
+  }
+
+  .edit-actions {
+    width: 100%;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    width: 100%;
+  }
+}
+
+/* ================= LOGOUT SECTION ================= */
+.logout-section {
+  margin-top: 24px;
+  padding: 16px;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 12px;
+  background: #ffffff;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #fee2e2;
+}
+
+/* ================= DESKTOP LOGOUT POSITION ================= */
+@media (min-width: 769px) {
+
+  .logout-section {
+    margin-top: 20px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .logout-btn {
+    width: auto;              /* full width hata */
+    padding: 8px 18px;        /* chhota button */
+    font-size: 13px;
+    border-radius: 6px;
+  }
+}
+
+
+/* Profile pic name */
+/* ================= USER INFO BELOW AVATAR ================= */
+.user-info {
+  margin-top: 14px;
+  text-align: center;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: 700;   /* 🔥 strong bold */
+  color: #111827;
+  line-height: 1.2;
+}
+
+.user-email {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 4px;
+  word-break: break-all;
+}
+
+/* ================= MOBILE FIX : AVATAR + USER INFO ================= */
+@media (max-width: 768px) {
+
+  .profile-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .avatar-wrapper {
+    margin-bottom: 10px;
+  }
+
+  .user-info {
+    margin-top: 0;
+  }
+
+  .user-name {
+    font-size: 15px;
+  }
+
+  .user-email {
+    font-size: 12px;
+  }
+}
+
+
+

@@ -1,0 +1,259 @@
+/* HERO SECTION */
+.hero {
+  padding: 32px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #eef2ff, #ffffff);
+  margin-bottom: 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.hero h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.hero p {
+  margin: 0;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+/* PRIMARY BUTTON */
+.primary-btn {
+  margin-top: 16px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+/* SECTION TITLE */
+.section-title {
+  margin: 24px 0 16px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* COURSE GRID */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* Slide shower */
+
+/* ===== SLIDER FULL WIDTH FIX ===== */
+.slider {
+  width: 100vw;                 /* 🔥 full screen */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  border-radius: 0;             /* PW style */
+  overflow: hidden;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.6s ease;
+}
+
+.slide {
+  min-width: 100%;
+}
+
+.slide img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+/* Desktop */
+@media (min-width: 768px) {
+  .slide img {
+    height: 300px;
+    border-radius: 0;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .slider {
+    width: auto;
+    margin: 12px;
+    border-radius: 16px;
+  }
+
+  .slide img {
+    height: 200px;
+    border-radius: 12px;
+  }
+}
+
+
+/* footer */
+/* ===== FOOTER ===== */
+.footer {
+  background: #0f172a; /* dark blue */
+  color: #cbd5e1;
+  margin-top: 60px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 48px 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+}
+
+.footer h3 {
+  color: #ffffff;
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.footer h4 {
+  color: #ffffff;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.footer p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer-links a {
+  display: block;
+  font-size: 14px;
+  color: #cbd5e1;
+  text-decoration: none;
+  margin-bottom: 8px;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #818cf8; /* indigo hover */
+}
+
+.footer-contact p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* BOTTOM BAR */
+.footer-bottom {
+  text-align: center;
+  padding: 14px;
+  background: #020617;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.footer-brand h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.footer-brand p {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.app-buttons img {
+  height: 38px;
+  margin-right: 10px;
+  margin-top: 16px;
+}
+
+.footer-social h4,
+.footer-links h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+
+@media (min-width: 992px) {
+  .footer-container {
+    grid-template-columns: 2.2fr 1.2fr 1fr 1fr;
+    align-items: start;
+  }
+
+  .footer-brand p {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: left;
+    row-gap: 28px;
+  }
+
+  .footer-brand h3 {
+    font-size: 18px;
+  }
+
+  .footer-brand p {
+    font-size: 14px;
+  }
+
+  .app-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .app-buttons img {
+    height: 36px;
+  }
+
+  .footer-bottom {
+    font-size: 12px;
+    padding: 12px;
+  }
+}
+.social-icons {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.social-icons a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c7d2fe;
+  font-size: 16px;
+  transition: all 0.25s ease;
+}
+
+.social-icons a:hover {
+  background: #4f46e5;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+
+
+
+
+

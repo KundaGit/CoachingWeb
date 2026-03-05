@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+:root {
+  --primary: #4f46e5;
+  --primary-soft: #eef2ff;
+  --text-dark: #111827;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --card-bg: #ffffff;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-dark);
+  margin: 0;
+}
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.95;
+}
+
+a {
+  text-decoration: none;
+}
+
+.swal2-icon {
+  transform: scale(0.75);
+}
+
+.swal2-title {
+  font-size: 18px !important;
+}
+
+.swal2-html-container {
+  font-size: 13px !important;
+}
+.mini-swal {
+  border-radius: 14px !important;
+}
+
+.swal-sub {
+  font-size: 13px;
+  color: #666;
+}

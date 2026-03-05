@@ -1,0 +1,219 @@
+/* ===============================
+   FULL SCREEN BACKGROUND
+================================ */
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px;
+
+  background:
+    linear-gradient(
+      rgba(2, 6, 23, 0.82),
+      rgba(2, 6, 23, 0.82)
+    ),
+    url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80');
+
+  background-size: cover;
+  background-position: center;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ===============================
+   LEFT BRANDING
+================================ */
+.branding {
+  max-width: 420px;
+}
+
+.branding h1 {
+  font-size: 44px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -1px;
+  text-shadow: 0 6px 30px rgba(0, 0, 0, 0.8);
+}
+
+.branding p {
+  font-size: 18px;
+  color: #cbd5f5;
+  margin-top: 10px;
+  max-width: 320px;
+}
+
+/* ===============================
+   LOGIN CARD – GLASS EFFECT
+================================ */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 38px;
+
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* Heading */
+.login-card h2 {
+  font-size: 26px;
+  margin-bottom: 25px;
+  color: #ffffff;
+}
+
+/* Label */
+.login-card label {
+  font-size: 14px;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+/* Input */
+.login-card input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.login-card input::placeholder {
+  color: #cbd5f5;
+}
+
+.login-card input:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.35);
+}
+
+/* Button */
+.login-card button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.login-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(79, 70, 229, 0.5);
+}
+
+/* Hint */
+.hint {
+  display: block;
+  margin-top: 14px;
+  font-size: 12px;
+  color: #cbd5f5;
+  text-align: center;
+}
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .login-screen {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 30px;
+  }
+
+  .branding {
+    margin-bottom: 25px;
+  }
+
+  .branding p {
+    margin: auto;
+  }
+}
+
+/* resend */
+.resend {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  color: #bfd4d2;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.resend:hover {
+  text-decoration: underline;
+}
+
+/* six boxes */
+.otp-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 12px;              /* 🔥 boxes ke beech space */
+  margin: 16px 0;
+}
+
+.otp-input {
+  width: 44px;
+  height: 48px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.otp-input:focus {
+  border-color: #4f46e5;
+  outline: none;
+}
+
+/* shake animation */
+button.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+.otp-boxes.shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+/* Masked */
+.otp-info {
+  margin-top: 4px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #b0b0b0;
+  text-align: center;
+}
+
+.otp-info b {
+  color: #e0e0e0;
+  font-weight: 500;
+}

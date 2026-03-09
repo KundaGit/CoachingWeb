@@ -34,17 +34,16 @@
         class="otp-boxes"
         [class.shake]="otpError"
       >
-      <input
-    *ngFor="let _ of otpBoxes; let i = index"
-    #otpInput
-    type="text"
-    maxlength="1"
-    inputmode="numeric"
-    class="otp-input"
-    (input)="onOtpInput($event, i)"
-    (keydown.backspace)="onOtpBackspace(i)"
-    (paste)="onOtpPaste($event)"
-  />
+ <input
+  *ngFor="let _ of otpBoxes; let i = index"
+  #otpInput
+  type="text"
+  maxlength="1"
+  inputmode="numeric"
+  class="otp-input"
+  (keydown)="onOtpKeyDown($event, i)"
+  (paste)="onOtpPaste($event)"
+/>
   
       </div>
 

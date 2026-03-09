@@ -73,29 +73,24 @@ export class LoginComponent implements OnDestroy {
   }
 
   /* ================= OTP INPUT ================= */
-  onOtpInput(event: Event, index: number) {
-    const input = event.target as HTMLInputElement;
-    const value = input.value.replace(/\D/g, '');
+onOtpInput(event: Event, index: number) {
+  const input = event.target as HTMLInputElement;
+  const value = input.value;
 
-    // empty
-    if (!value) {
-      input.value = '';
-      this.otpBoxes[index] = '';
-      this.updateOtpState();
-      return;
-    }
-
-    // only one digit
-    input.value = value.charAt(0);
-    this.otpBoxes[index] = value.charAt(0);
-
-    // move to next box
-    if (index < this.otpBoxes.length - 1) {
-      this.otpInputs.toArray()[index + 1].nativeElement.focus();
-    }
-
-    this.updateOtpState();
+  if (!/^[0-9]$/.test(value)) {
+    input.value = '';
+    this.otpBoxes[index] = '';
+    return;
   }
+
+  this.otpBoxes[index] = value;
+
+  if (index < this.otpBoxes.length - 1) {
+    this.otpInputs.toArray()[index + 1].nativeElement.focus();
+  }
+
+  this.updateOtpState();
+}
 
   /* ================= BACKSPACE ================= */
  onOtpBackspace(index: number) {
@@ -125,6 +120,38 @@ export class LoginComponent implements OnDestroy {
     this.updateOtpState();
     this.otpInputs.last?.nativeElement.focus();
   }
+
+  onOtpKeyDown(event: KeyboardEvent, index: number) {
+  const key = event.key;
+
+  // number press
+  if (/^[0-9]$/.test(key)) {
+    event.preventDefault();
+
+    this.otpBoxes[index] = key;
+    this.otpInputs.toArray()[index].nativeElement.value = key;
+
+    if (index < this.otpBoxes.length - 1) {
+      this.otpInputs.toArray()[index + 1].nativeElement.focus();
+    }
+
+    this.updateOtpState();
+  }
+
+  // backspace
+  if (key === 'Backspace') {
+    event.preventDefault();
+
+    this.otpBoxes[index] = '';
+    this.otpInputs.toArray()[index].nativeElement.value = '';
+
+    if (index > 0) {
+      this.otpInputs.toArray()[index - 1].nativeElement.focus();
+    }
+
+    this.updateOtpState();
+  }
+}
 
   /* ================= OTP STATE ================= */
   updateOtpState() {

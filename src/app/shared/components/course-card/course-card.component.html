@@ -5,8 +5,8 @@
   <button (click)="payNow()" [hidden]="isPaidUser()">Pay ₹199</button>
 </div>
 
-<!-- Course Card Component -->
- <div class="course-page">
+<!-- Course Page -->
+<div class="course-page">
 
   <!-- HEADER -->
   <div class="course-header">
@@ -49,8 +49,13 @@
   </div>
 
   <!-- BUY BUTTON -->
-  <button class="buy-btn" *ngIf="!isPaid" (click)="payNow()">
-    Buy Course ₹{{ course.price }}
-  </button>
+  <button class="buy-btn" *ngIf="!isPaidUser()" (click)="payNow()">
+  Buy Course ₹{{ course.price }}
+</button>
+
+  <!-- DOWNLOAD INVOICE BUTTON -->
+ <button class="buy-btn" *ngIf="isPaidUser()" (click)="downloadInvoice()">
+  Download Invoice PDF
+</button>
 
 </div>

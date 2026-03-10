@@ -41,8 +41,32 @@ export class CourseCardComponent {
     this.userEmail = localStorage.getItem('userEmail') || '';
     this.isPaid=localStorage.getItem('isPaid') === 'true';
   }
+// payNow() {
+//   this.http.post<any>('http://localhost:5000/api/payment/create-order', {
+//     amount: 499,
+//     email: this.userEmail
+//   }).subscribe(res => {
+
+//     const options = {
+//       key: res.key,
+//       amount: 499 * 100,
+//       currency: 'INR',
+//       name: 'Kundan Institute App',
+//       description: 'Course Access',
+//       order_id: res.orderId,
+//       handler: (response: any) => {
+//         this.verifyPayment(response);
+//       },
+//       theme: { color: '#0bd7d7' }
+//     };
+
+//     const rzp = new (window as any).Razorpay(options);
+//     rzp.open();
+//   });
+// }
+
 payNow() {
-  this.http.post<any>('http://localhost:5000/api/payment/create-order', {
+  this.http.post<any>('https://coaching-backend-pndt.onrender.com/api/payment/create-order', {
     amount: 499,
     email: this.userEmail
   }).subscribe(res => {
@@ -64,9 +88,44 @@ payNow() {
     rzp.open();
   });
 }
+// verifyPayment(response: any) {
+
+//   this.http.post('http://localhost:5000/api/payment/verify', response)
+//   .subscribe(() => {
+
+//     localStorage.setItem('isPaid', 'true');
+//     localStorage.setItem('paymentId', response.razorpay_payment_id);
+
+//     this.isPaid = true;
+
+//     Swal.fire({
+//       icon: 'success',
+//       title: 'Payment Successful',
+//       html: `
+//         <div style="font-size:13px;color:#666">
+//           ${this.userEmail}<br/>
+//           Course Activated
+//         </div>
+//       `,
+//       width: 320,
+//       padding: '1.2rem',
+//       showConfirmButton: false,
+//       timer: 2000,
+//       timerProgressBar: true,
+//       backdrop: 'rgba(0,0,0,0.4)'
+//     }).then(() => {
+
+//       this.router.navigate(['/home']);
+
+//     });
+
+//   });
+
+// }
+
 verifyPayment(response: any) {
 
-  this.http.post('http://localhost:5000/api/payment/verify', response)
+  this.http.post('https://coaching-backend-pndt.onrender.com/api/payment/verify', response)
   .subscribe(() => {
 
     localStorage.setItem('isPaid', 'true');
@@ -102,14 +161,24 @@ isPaidUser(): boolean {
   return localStorage.getItem('isPaid') === 'true';
 }
 // pdf download function
+// downloadInvoice() {
+
+//   const paymentId = localStorage.getItem("paymentId");
+
+//   window.open(
+//     `http://localhost:5000/api/payment/invoice/${paymentId}`,
+//     "_blank"
+//   );
+
+// }
 downloadInvoice() {
 
   const paymentId = localStorage.getItem("paymentId");
 
-  window.open(
-    `http://localhost:5000/api/payment/invoice/${paymentId}`,
-    "_blank"
-  );
+ window.open(
+  `https://coaching-backend-pndt.onrender.com/api/payment/invoice/${paymentId}`,
+  "_blank"
+);
 
 }
 

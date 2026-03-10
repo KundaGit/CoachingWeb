@@ -12,7 +12,8 @@ export interface LoggedInUser {
 })
 export class AuthService {
 
-  private readonly API = 'http://localhost:5000/api/auth';
+  // private readonly API = 'http://localhost:5000/api/auth';
+  private readonly API = 'https://coaching-backend-pndt.onrender.com/api/auth';
 
   private readonly LOGIN_KEY = 'loggedIn';
   private readonly USER_KEY = 'user';

@@ -1,4 +1,5 @@
 <div class="login-screen">
+
   <div class="branding">
     <h1>Institute App</h1>
     <p>Learn better. Score higher.</p>
@@ -6,66 +7,80 @@
 
   <div class="login-card">
 
-    <!-- STEP 1 -->
+    <!-- EMAIL STEP -->
     <ng-container *ngIf="step === 'email'">
+
       <h2>Welcome Back 👋</h2>
 
       <label>Email Address</label>
+
       <input
         type="email"
-        maxlength="100"
-        placeholder="Enter your email address"
+        placeholder="Enter your email"
         [(ngModel)]="email"
       />
 
       <button (click)="sendOtp()">Continue</button>
+
       <span class="hint">OTP will be sent to this email</span>
+
     </ng-container>
 
-    <!-- STEP 2 -->
+
+    <!-- OTP STEP -->
     <ng-container *ngIf="step === 'otp'">
+
       <h2>Verify OTP 🔐</h2>
 
-      <label>Enter OTP</label>
-      <p class="otp-info">6-digit code sent to <b>{{maskedEmail}}</b></p>
+      <p class="otp-info">
+        6-digit code sent to <b>{{maskedEmail}}</b>
+      </p>
+      <p class="otp-placeholder" *ngIf="otp.length === 0">
+  Enter OTP
+</p>
 
-      <!-- OTP BOXES -->
-      <div
-        class="otp-boxes"
-        [class.shake]="otpError"
-      >
- <input
-  *ngFor="let _ of otpBoxes; let i = index"
-  #otpInput
-  type="text"
-  maxlength="1"
-  inputmode="numeric"
-  class="otp-input"
-  (keydown)="onOtpKeyDown($event, i)"
-  (paste)="onOtpPaste($event)"
-/>
-  
+      <!-- OTP WRAPPER -->
+      <div class="otp-wrapper" (click)="focusInput()">
+
+        <!-- hidden input -->
+        <input
+          #otpInput
+          type="text"
+          maxlength="6"
+          class="otp-hidden"
+          [(ngModel)]="otp"
+          (input)="onOtpChange()"
+        />
+
+        <!-- visible boxes -->
+        <div class="otp-boxes">
+
+          <div
+            class="box"
+            *ngFor="let box of otpArray; let i = index"
+            [class.active]="i === otp.length"
+          >
+            {{ otp[i] || '' }}
+          </div>
+
+        </div>
+
       </div>
 
-      <!-- VERIFY -->
-      <button
-        (click)="verifyOtp()"
-        [disabled]="!isOtpComplete"
-        [class.disabled]="!isOtpComplete"
-      >
+      <button (click)="verifyOtp()" [disabled]="otp.length !== 6">
         Verify
       </button>
 
-      <!-- TIMER -->
       <span class="hint" *ngIf="!canResend">
-        Resend OTP in {{ timer }} sec
+        Resend OTP in {{timer}} sec
       </span>
 
-      <!-- RESEND -->
       <span class="resend" *ngIf="canResend" (click)="resendOtp()">
         Resend OTP
       </span>
+
     </ng-container>
 
   </div>
+
 </div>

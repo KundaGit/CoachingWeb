@@ -106,13 +106,36 @@ onOtpChange() {
           this.router.navigate(['/home']);
         });
       },
-      error: () => alert('Invalid OTP')
+      error: () =>this.triggerOtpError()
     });
   }
+ 
+  triggerOtpError(){
+
+  const boxes = document.querySelector('.otp-boxes');
+
+  if(boxes){
+    boxes.classList.add('shake');
+  }
+
+  // clear otp
+  this.otp = '';
+
+  // force change detection
+  setTimeout(() => {
+
+    if(boxes){
+      boxes.classList.remove('shake');
+    }
+
+    // focus back to hidden input
+    this.otpInput.nativeElement.focus();
+
+  }, 400);
+
+}
 
   
-
-   
 
   /* TIMER */
   startTimer() {

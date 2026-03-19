@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CourseCardComponent } from '../shared/components/course-card/course-card.component';
 import { CommonModule } from '@angular/common';
+import { AiChatComponent } from "../ai-chat/ai-chat.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CourseCardComponent,CommonModule],
+  imports: [CourseCardComponent, CommonModule, AiChatComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

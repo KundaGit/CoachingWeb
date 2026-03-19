@@ -1,0 +1,37 @@
+<!-- FLOATING BUTTON -->
+<div class="chat-toggle" (click)="toggleChat()">
+  💬
+</div>
+
+<!-- CHAT BOX -->
+<div class="chat-wrapper" *ngIf="isOpen">
+
+  <!-- HEADER -->
+  <div class="chat-header">
+    🤖 AI Teacher
+    <span class="close-btn" (click)="toggleChat()">✖</span>
+  </div>
+
+  <!-- BODY -->
+  <div class="chat-body">
+    <div *ngFor="let msg of messages"
+         [ngClass]="msg.role === 'user' ? 'user-msg' : 'ai-msg'">
+      {{ msg.text }}
+    </div>
+
+    <div *ngIf="loading" class="ai-msg typing">
+      Typing...
+    </div>
+  </div>
+
+  <!-- INPUT -->
+  <div class="chat-input">
+    <input 
+      [(ngModel)]="userInput"
+      placeholder="Apna doubt pucho..."
+      (keyup.enter)="sendMessage()"
+    />
+    <button (click)="sendMessage()">Send</button>
+  </div>
+
+</div>

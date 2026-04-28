@@ -18,6 +18,18 @@ export class LayoutComponent implements OnInit {
   userAvatar: string | null = null; // future use
   
   isDropdownOpen: boolean = false;
+isAdmin(): boolean {
+  const adminEmails = [
+    'kundan.rajak.dev@gmail.com',  // ✅ tera email — full admin
+    'kundankumar0697@gmail.com'    // ✅ tera dusra email — bhi admin
+  ];
+  return adminEmails.includes(this.userEmail);
+}
+
+goToAdmin() {
+  this.isDropdownOpen = false;
+  this.router.navigate(['/admin']);
+}
   constructor(
     public auth: AuthService,
     private router: Router

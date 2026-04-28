@@ -45,20 +45,27 @@
     </div>
 
     <!-- DROPDOWN -->
-    <div class="dropdown" *ngIf="isDropdownOpen">
-      <div class="dropdown-header">
-        {{ userEmail }}
-      </div>
+  <!-- DROPDOWN -->
+<div class="dropdown" *ngIf="isDropdownOpen">
+  <div class="dropdown-header">
+    {{ userEmail }}
+  </div>
 
-      <div class="dropdown-item" (click)="goToProfile()">
-        👤 Profile
-      </div>
+  <div class="dropdown-item" (click)="goToProfile()">
+    👤 Profile
+  </div>
 
-      <div class="dropdown-item logout" (click)="logout()">
-        🚪 Logout
-      </div>
-    </div>
+  <!-- ✅ Admin link — sirf admin email ke liye -->
+  <div class="dropdown-item" 
+       *ngIf="isAdmin()" 
+       (click)="goToAdmin()">
+    🔧 Admin Panel
+  </div>
 
+  <div class="dropdown-item logout" (click)="logout()">
+    🚪 Logout
+  </div>
+</div>
   </div>
 </header>
 
@@ -69,17 +76,22 @@
 
   <!-- ===== BOTTOM NAV ===== -->
   <nav class="bottom-nav" *ngIf="auth.isLoggedIn()">
-    <a routerLink="/home" routerLinkActive="active">
-      <span class="icon">🏠</span>
-      <span>Home</span>
-    </a>
-    <a routerLink="/courses" routerLinkActive="active">
-      <span class="icon">📚</span>
-      <span>Courses</span>
-    </a>
-    <a routerLink="/profile" routerLinkActive="active">
-      <span class="icon">👤</span>
-      <span>Profile</span>
-    </a>
-  </nav>
+  <a routerLink="/home" routerLinkActive="active">
+    <span class="icon">🏠</span>
+    <span>Home</span>
+  </a>
+  <a routerLink="/courses" routerLinkActive="active">
+    <span class="icon">📚</span>
+    <span>Courses</span>
+  </a>
+  <a routerLink="/profile" routerLinkActive="active">
+    <span class="icon">👤</span>
+    <span>Profile</span>
+  </a>
+  <!-- ✅ Admin sirf tujhe dikhega -->
+  <a routerLink="/admin" routerLinkActive="active" *ngIf="isAdmin()">
+    <span class="icon">🔧</span>
+    <span>Admin</span>
+  </a>
+</nav>
 </div>

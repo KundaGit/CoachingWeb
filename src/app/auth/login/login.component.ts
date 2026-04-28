@@ -1,8 +1,9 @@
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute  } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import Swal from 'sweetalert2';
+
 import {
   Component,
   OnDestroy,
@@ -33,7 +34,8 @@ otpArray = new Array(6);
 @ViewChild('otpInput') otpInput!: ElementRef;
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   focusInput() {
@@ -102,9 +104,12 @@ onOtpChange() {
           timer: 4000,
           timerProgressBar: true,
           backdrop: 'rgba(0,0,0,0.4)'
-        }).then(() => {
-          this.router.navigate(['/home']);
-        });
+        })
+       .then(() => {
+  // ✅ returnUrl check karo, nahi toh /home
+  const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+  this.router.navigate([returnUrl]);
+});
       },
       error: () =>this.triggerOtpError()
     });

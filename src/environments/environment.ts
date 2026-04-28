@@ -9,3 +9,10 @@
 //     appId: "1:867628725245:web:60821360d6c7a43c6d5f94"
 //   }
 // };
+
+
+
+// // ✅ Render URL wapas karo
+// 'https://coaching-backend-pndt.onrender.com/api/payment/create-order'
+// 'https://coaching-backend-pndt.onrender.com/api/payment/verify'
+// `https://coaching-backend-pndt.onrender.com/api/payment/invoice/${paymentId}`

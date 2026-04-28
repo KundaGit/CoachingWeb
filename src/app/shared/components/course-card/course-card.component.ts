@@ -1,9 +1,10 @@
-import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-course-card',
   standalone: true,
@@ -11,176 +12,143 @@ import Swal from 'sweetalert2';
   templateUrl: './course-card.component.html',
   styleUrl: './course-card.component.css'
 })
-export class CourseCardComponent {
+export class CourseCardComponent implements OnInit {
 
-  constructor(private http: HttpClient, private route:ActivatedRoute,private router: Router) {
-     this.courseSlug = this.route.snapshot.params['slug'];
+  @Input() courseData: any;
+
+  userEmail: string = '';
+  isPaid: boolean = false;
+  showDetail = false; // ✅ toggle ke liye
+
+toggleDetail() {
+  this.showDetail = !this.showDetail;
+}
+
+  get course() {
+    return this.courseData;
   }
 
-  userEmail! : string  ;
-   courseSlug = '';
-  isPaid = false; // This should ideally come from a service that checks the user's payment status
-
-  course = {
-    title: 'Class 10 Maths',
-    description: 'Complete syllabus + tests',
-    price: 199,
-    teacher: 'PW Faculty',
-    duration: '12 Months',
-    chapters: [
-      { name: 'Real Numbers', free: true },
-      { name: 'Polynomials', free: false },
-      { name: 'Linear Equations', free: false },
-      { name: 'Quadratic Equations', free: false },
-      { name: 'Statistics', free: false }
-    ]
-  };
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private auth: AuthService
+  ) {}
 
   ngOnInit() {
-
     this.userEmail = localStorage.getItem('userEmail') || '';
-    this.isPaid=localStorage.getItem('isPaid') === 'true';
+    this.isPaid = localStorage.getItem(`isPaid_${this.courseData?.slug}`) === 'true';
   }
-// payNow() {
-//   this.http.post<any>('http://localhost:5000/api/payment/create-order', {
-//     amount: 499,
-//     email: this.userEmail
-//   }).subscribe(res => {
+  
+goToQuiz() {
+  this.router.navigate(['/quiz', this.courseData.slug]);
+}
+  // ─── PAY NOW ───
+  payNow() {
 
-//     const options = {
-//       key: res.key,
-//       amount: 499 * 100,
-//       currency: 'INR',
-//       name: 'Kundan Institute App',
-//       description: 'Course Access',
-//       order_id: res.orderId,
-//       handler: (response: any) => {
-//         this.verifyPayment(response);
-//       },
-//       theme: { color: '#0bd7d7' }
-//     };
+    // ✅ Login check pehle
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(['/login'], {
+        queryParams: { returnUrl: '/courses' }
+      });
+      return;
+    }
 
-//     const rzp = new (window as any).Razorpay(options);
-//     rzp.open();
-//   });
-// }
+    this.http.post<any>(
+      'http://localhost:5000/api/payment/create-order',
+      {
+        amount: this.courseData.price,
+        email: this.userEmail
+      }
+    ).subscribe({
+      next: (res) => {
+        const options = {
+          key: res.key,
+          amount: this.courseData.price * 100,
+          currency: 'INR',
+          name: 'Kundan Institute App',
+          description: this.courseData.title,
+          order_id: res.orderId,
+          handler: (response: any) => {
+            this.verifyPayment(response);
+          },
+          theme: { color: '#0bd7d7' }
+        };
 
-payNow() {
-  this.http.post<any>('https://coaching-backend-pndt.onrender.com/api/payment/create-order', {
-    amount: 499,
-    email: this.userEmail
-  }).subscribe(res => {
-
-    const options = {
-      key: res.key,
-      amount: 499 * 100,
-      currency: 'INR',
-      name: 'Kundan Institute App',
-      description: 'Course Access',
-      order_id: res.orderId,
-      handler: (response: any) => {
-        this.verifyPayment(response);
+        const rzp = new (window as any).Razorpay(options);
+        rzp.open();
       },
-      theme: { color: '#0bd7d7' }
-    };
-
-    const rzp = new (window as any).Razorpay(options);
-    rzp.open();
-  });
-}
-// verifyPayment(response: any) {
-
-//   this.http.post('http://localhost:5000/api/payment/verify', response)
-//   .subscribe(() => {
-
-//     localStorage.setItem('isPaid', 'true');
-//     localStorage.setItem('paymentId', response.razorpay_payment_id);
-
-//     this.isPaid = true;
-
-//     Swal.fire({
-//       icon: 'success',
-//       title: 'Payment Successful',
-//       html: `
-//         <div style="font-size:13px;color:#666">
-//           ${this.userEmail}<br/>
-//           Course Activated
-//         </div>
-//       `,
-//       width: 320,
-//       padding: '1.2rem',
-//       showConfirmButton: false,
-//       timer: 2000,
-//       timerProgressBar: true,
-//       backdrop: 'rgba(0,0,0,0.4)'
-//     }).then(() => {
-
-//       this.router.navigate(['/home']);
-
-//     });
-
-//   });
-
-// }
-
-verifyPayment(response: any) {
-
-  this.http.post('https://coaching-backend-pndt.onrender.com/api/payment/verify', response)
-  .subscribe(() => {
-
-    localStorage.setItem('isPaid', 'true');
-    localStorage.setItem('paymentId', response.razorpay_payment_id);
-
-    this.isPaid = true;
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Payment Successful',
-      html: `
-        <div style="font-size:13px;color:#666">
-          ${this.userEmail}<br/>
-          Course Activated
-        </div>
-      `,
-      width: 320,
-      padding: '1.2rem',
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: true,
-      backdrop: 'rgba(0,0,0,0.4)'
-    }).then(() => {
-
-      this.router.navigate(['/home']);
-
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Payment Failed',
+          text: 'Could not create order. Please try again.',
+          width: 320,
+          timer: 3000,
+          showConfirmButton: false
+        });
+      }
     });
+  }
 
-  });
+  // ─── VERIFY PAYMENT ───
+  verifyPayment(response: any) {
 
-}
-isPaidUser(): boolean {
-  return localStorage.getItem('isPaid') === 'true';
-}
-// pdf download function
-// downloadInvoice() {
+    this.http.post(
+      'http://localhost:5000/api/payment/verify',
+      response
+    ).subscribe({
+      next: () => {
 
-//   const paymentId = localStorage.getItem("paymentId");
+        // ✅ Per-course isPaid store karo
+        localStorage.setItem(`isPaid_${this.courseData.slug}`, 'true');
+        localStorage.setItem('paymentId', response.razorpay_payment_id);
+        this.isPaid = true;
 
-//   window.open(
-//     `http://localhost:5000/api/payment/invoice/${paymentId}`,
-//     "_blank"
-//   );
+        Swal.fire({
+          icon: 'success',
+          title: 'Payment Successful',
+          html: `
+            <div style="font-size:13px;color:#666">
+              ${this.userEmail}<br/>
+              Course Activated: <b>${this.courseData.title}</b>
+            </div>
+          `,
+          width: 320,
+          padding: '1.2rem',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          backdrop: 'rgba(0,0,0,0.4)'
+        }).then(() => {
+          this.router.navigate(['/home']);
+        });
 
-// }
-downloadInvoice() {
+      },
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Verification Failed',
+          text: 'Payment could not be verified. Contact support.',
+          width: 320,
+          timer: 3000,
+          showConfirmButton: false
+        });
+      }
+    });
+  }
 
-  const paymentId = localStorage.getItem("paymentId");
+  // ─── IS PAID USER ───
+  isPaidUser(): boolean {
+    return localStorage.getItem(`isPaid_${this.courseData?.slug}`) === 'true';
+  }
 
- window.open(
-  `https://coaching-backend-pndt.onrender.com/api/payment/invoice/${paymentId}`,
-  "_blank"
-);
-
-}
-
+  // ─── DOWNLOAD INVOICE ───
+  downloadInvoice() {
+    const paymentId = localStorage.getItem('paymentId');
+    window.open(
+      `http://localhost:5000/api/payment/invoice/${paymentId}`,
+      '_blank'
+    );
+  }
 
 }

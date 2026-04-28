@@ -1,0 +1,63 @@
+<div class="quiz-wrapper">
+
+  <!-- RESULT SCREEN -->
+  <div class="result-screen" *ngIf="quizDone">
+    <div class="result-emoji">{{ getResult() }}</div>
+    <div class="result-score">{{ score }} / {{ totalQuestions }}</div>
+    <div class="result-label">Your Score</div>
+
+    <div class="result-actions">
+      <button class="btn-retry" (click)="retryQuiz()">🔄 Retry Quiz</button>
+      <button class="btn-back" (click)="goBack()">📚 Back to Courses</button>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div class="quiz-screen" *ngIf="!quizDone">
+
+    <!-- HEADER -->
+    <div class="quiz-header">
+      <button class="back-btn" (click)="goBack()">← Back</button>
+      <div class="progress-text">
+        {{ currentIndex + 1 }} / {{ totalQuestions }}
+      </div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar">
+      <div 
+        class="progress-fill"
+        [style.width.%]="((currentIndex + 1) / totalQuestions) * 100">
+      </div>
+    </div>
+
+    <!-- QUESTION -->
+    <div class="question-box">
+      <h2>{{ currentQuestion.question }}</h2>
+    </div>
+
+    <!-- OPTIONS -->
+    <div class="options">
+      <button
+        class="option"
+        *ngFor="let opt of currentQuestion.options; let i = index"
+        [class.selected]="selectedAnswer === i"
+        [class.correct]="selectedAnswer !== null && i === currentQuestion.correct"
+        [class.wrong]="selectedAnswer === i && i !== currentQuestion.correct"
+        (click)="selectAnswer(i)"
+      >
+        <span class="opt-label">{{ ['A', 'B', 'C', 'D'][i] }}</span>
+        {{ opt }}
+      </button>
+    </div>
+
+    <!-- NEXT BUTTON -->
+    <button 
+      class="next-btn" 
+      *ngIf="selectedAnswer !== null"
+      (click)="next()">
+      {{ currentIndex === totalQuestions - 1 ? 'Submit Quiz 🎯' : 'Next →' }}
+    </button>
+
+  </div>
+</div>

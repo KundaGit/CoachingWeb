@@ -1,7 +1,17 @@
+<!-- SEARCH BAR -->
+<div class="search-bar">
+  <input 
+    type="text" 
+    [(ngModel)]="searchQuery" 
+    placeholder="🔍 Search courses..."
+  />
+</div>
+
 <h2>All Courses</h2>
 
 <div class="course-grid">
-  <app-course-card></app-course-card>
-  <app-course-card></app-course-card>
-  <app-course-card></app-course-card>
+  <app-course-card 
+    *ngFor="let course of filteredCourses"  
+    [courseData]="course">
+  </app-course-card>
 </div>

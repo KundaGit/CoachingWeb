@@ -1,61 +1,73 @@
-<div class="card">
-  <h4>Class 10 Maths</h4>
-  <p>Complete syllabus + tests</p>
-  <button>View Course</button>
-  <button (click)="payNow()" [hidden]="isPaidUser()">Pay ₹199</button>
-</div>
+<ng-container *ngIf="courseData">
 
-<!-- Course Page -->
-<div class="course-page">
-
-  <!-- HEADER -->
-  <div class="course-header">
-    <h1>{{ course.title }}</h1>
-    <p>{{ course.description }}</p>
-    <span class="badge">Class 9–10</span>
+  <!-- SMALL CARD — hamesha dikhega -->
+  <div class="card" (click)="toggleDetail()">
+    <h4>{{ courseData?.title }}</h4>
+    <p>{{ courseData?.description }}</p>
+    <button>View Course</button>
+    <!-- ✅ Quiz button add karo -->
+  <button (click)="$event.stopPropagation(); goToQuiz()">
+    📝 Take Quiz
+  </button>
+    <button (click)="$event.stopPropagation(); payNow()" *ngIf="!isPaidUser()">
+      Pay ₹{{ courseData?.price }}
+    </button>
   </div>
 
-  <!-- COURSE INFO -->
-  <div class="info-box">
-    <div>
-      <strong>Teacher</strong>
-      <p>{{ course.teacher }}</p>
+  <!-- COURSE DETAIL — sirf click karne pe dikhega -->
+  <div class="course-page" *ngIf="showDetail">
+
+    <!-- CLOSE BUTTON -->
+    <button class="close-btn" (click)="toggleDetail()">✕ Close</button>
+
+    <!-- HEADER -->
+    <div class="course-header">
+      <h1>{{ courseData?.title }}</h1>
+      <p>{{ courseData?.description }}</p>
+      <span class="badge">Class 9–10</span>
     </div>
-    <div>
-      <strong>Duration</strong>
-      <p>{{ course.duration }}</p>
+
+    <!-- COURSE INFO -->
+    <div class="info-box">
+      <div>
+        <strong>Teacher</strong>
+        <p>{{ courseData?.teacher }}</p>
+      </div>
+      <div>
+        <strong>Duration</strong>
+        <p>{{ courseData?.duration }}</p>
+      </div>
+      <div>
+        <strong>Price</strong>
+        <p>₹{{ courseData?.price }}</p>
+      </div>
     </div>
-    <div>
-      <strong>Price</strong>
-      <p>₹{{ course.price }}</p>
+
+    <!-- CHAPTER LIST -->
+    <div class="chapters">
+      <h3>Course Content</h3>
+      <div
+        class="chapter"
+        *ngFor="let ch of courseData?.chapters"
+        [class.locked]="!ch.free && !isPaid"
+      >
+        <span>{{ ch.name }}</span>
+        <span class="status" *ngIf="ch.free">FREE</span>
+        <span class="status lock" *ngIf="!ch.free && !isPaid">🔒 Locked</span>
+        <span class="status unlock" *ngIf="isPaid">▶ Watch</span>
+      </div>
     </div>
+
+    <!-- BUY BUTTON -->
+    <button class="buy-btn" *ngIf="!isPaidUser()" (click)="payNow()">
+      Buy Course ₹{{ courseData?.price }}
+    </button>
+
+    <!-- DOWNLOAD INVOICE -->
+    <button class="buy-btn" *ngIf="isPaidUser()" (click)="downloadInvoice()">
+      Download Invoice PDF
+    </button>
+
   </div>
 
-  <!-- CHAPTER LIST -->
-  <div class="chapters">
-    <h3>Course Content</h3>
-
-    <div
-      class="chapter"
-      *ngFor="let ch of course.chapters"
-      [class.locked]="!ch.free && !isPaid"
-    >
-      <span>{{ ch.name }}</span>
-
-      <span class="status" *ngIf="ch.free">FREE</span>
-      <span class="status lock" *ngIf="!ch.free && !isPaid">🔒 Locked</span>
-      <span class="status unlock" *ngIf="isPaid">▶ Watch</span>
-    </div>
-  </div>
-
-  <!-- BUY BUTTON -->
-  <button class="buy-btn" *ngIf="!isPaidUser()" (click)="payNow()">
-  Buy Course ₹{{ course.price }}
-</button>
-
-  <!-- DOWNLOAD INVOICE BUTTON -->
- <button class="buy-btn" *ngIf="isPaidUser()" (click)="downloadInvoice()">
-  Download Invoice PDF
-</button>
-
-</div>
+</ng-container>

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import Swal from 'sweetalert2';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-course-card',
@@ -18,12 +19,25 @@ export class CourseCardComponent implements OnInit {
 
   userEmail: string = '';
   isPaid: boolean = false;
+  currentVideo!: SafeResourceUrl;
+  selectedChapter: any;
   showDetail = false; // ✅ toggle ke liye
 
 toggleDetail() {
   this.showDetail = !this.showDetail;
+   if (this.showDetail && this.courseData?.chapters?.length) {
+      this.currentVideo = this.sanitizer.bypassSecurityTrustResourceUrl(
+        this.courseData.chapters[0].video
+      );
+    }
 }
 
+ selectVideo(ch: any) {
+    if (ch.free || this.isPaid) {
+      this.selectedChapter = ch;
+      this.currentVideo = this.sanitizer.bypassSecurityTrustResourceUrl(ch.video);
+    }
+  }
   get course() {
     return this.courseData;
   }
@@ -31,7 +45,8 @@ toggleDetail() {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {

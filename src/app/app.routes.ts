@@ -8,6 +8,9 @@ import { authGuard } from './core/guards/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { QuizComponent } from './quiz/quiz.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { TermsComponent } from './pages/terms/terms.component';
+import { RefundPolicyComponent } from './pages/refund-policy/refund-policy.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,13 +23,18 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent,
     // ❌ canActivate hatao yahan se
-    children: [
-      { path: 'home', component: HomeComponent },
-      { path: 'courses', component: CoursesComponent },
-      // ✅ sirf profile protected
-      { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
-      { path: 'quiz/:slug', component: QuizComponent, canActivate: [authGuard] },
-      { path: '', redirectTo: 'home', pathMatch: 'full' }
-    ]
+  children: [
+  { path: 'home', component: HomeComponent },
+
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'terms', component: TermsComponent },
+  { path: 'refund-policy', component: RefundPolicyComponent },
+
+  { path: 'courses', component: CoursesComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
+  { path: 'quiz/:slug', component: QuizComponent, canActivate: [authGuard] },
+
+  { path: '', redirectTo: 'home', pathMatch: 'full' }
+]
   }
 ];

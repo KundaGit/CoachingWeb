@@ -1,8 +1,16 @@
 <div class="app-wrapper">
   <!-- ===== TOP BAR ===== -->
 <header class="topbar">
-  <div class="logo" routerLink="/home">Institute App</div>
-
+ 
+<div class="logo" routerLink="/home">
+  <div class="logo-icon">
+    <img src="assets/logo.png" alt="logo" />
+  </div>
+  <div class="logo-text">
+    <h2>Institute</h2>
+    <span>APP</span>
+  </div>
+</div>
   <div class="user-menu" *ngIf="auth.isLoggedIn()">
 
 <!-- 🔔 NOTIFICATION BELL -->
@@ -74,6 +82,72 @@
     <router-outlet></router-outlet>
   </main>
 
+<footer class="footer">
+  <div class="footer-container">
+    <!-- BRAND -->
+    <div class="footer-brand">
+      <h3>Kundan Institute</h3>
+      <p>
+        We understand that every student has unique needs and abilities, that’s
+        why our curriculum is designed to adapt to your needs and help you grow!
+      </p>
+
+      <div class="app-buttons">
+        <img src="assets/badges/app.png" alt="Google Play" />
+        <img src="assets/badges/app2.png" alt="App Store" />
+      </div>
+    </div>
+    <!-- SOCIAL -->
+ <div class="footer-social">
+  <h4>Let’s get social :</h4>
+  <div class="social-icons">
+    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    <a href="#" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+  </div>
+</div>
+
+    <!-- QUICK LINKS -->
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a href="#">Home</a>
+      <a href="#">Courses</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+
+       <a routerLink="/privacy-policy">Privacy Policy</a>
+  <a routerLink="/terms">Terms & Conditions</a>
+  <a routerLink="/refund-policy">Refund Policy</a>
+    </div>
+
+    <!-- COURSES -->
+    <div class="footer-links">
+      <h4>Courses</h4>
+      <a href="#">Class 9–10</a>
+      <a href="#">Class 11–12</a>
+      <a href="#">NEET</a>
+      <a href="#">Crash Course</a>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>📍 India</p>
+      <p>📞 +91 XXXXX XXXXX</p>
+      <p>
+        ✉️
+        <a href="mailto:support@kundaninstitute.com">
+          support&#64;kundaninstitute.com
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">© 2026 Kundan Institute. All rights reserved.</div>
+</footer>
+  
   <!-- ===== BOTTOM NAV ===== -->
   <nav class="bottom-nav" *ngIf="auth.isLoggedIn()">
   <a routerLink="/home" routerLinkActive="active">

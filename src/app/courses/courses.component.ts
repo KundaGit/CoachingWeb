@@ -29,6 +29,21 @@ get filteredCourses() {
       duration: '12 Months',
       slug: 'class-10-maths',
       chapters: [
+         {
+        name: 'Real Numbers',
+        free: true,
+        video: 'https://www.youtube.com/embed/2Vv-BfVoq4g'
+      },
+      {
+        name: 'Polynomials',
+        free: true,
+        video: 'https://www.youtube.com/embed/watch?v=1muJQdq6VV8&list=RD1muJQdq6VV8&start_radio=1'
+      },
+      {
+        name: 'Linear Equations',
+        free: false,
+        video: 'https://www.youtube.com/embed/ysz5S6PUM-U'
+      },
         { name: 'Real Numbers', free: true },
         { name: 'Polynomials', free: false },
         { name: 'Linear Equations', free: false },

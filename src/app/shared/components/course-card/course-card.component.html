@@ -1,33 +1,51 @@
 <ng-container *ngIf="courseData">
 
-  <!-- SMALL CARD — hamesha dikhega -->
-  <div class="card" (click)="toggleDetail()">
+  <!-- SMALL CARD -->
+ <div class="card" *ngIf="!showDetail" (click)="toggleDetail()">
     <h4>{{ courseData?.title }}</h4>
     <p>{{ courseData?.description }}</p>
+
     <button>View Course</button>
-    <!-- ✅ Quiz button add karo -->
-  <button (click)="$event.stopPropagation(); goToQuiz()">
-    📝 Take Quiz
-  </button>
+
+    <button (click)="$event.stopPropagation(); goToQuiz()">
+      📝 Take Quiz
+    </button>
+
     <button (click)="$event.stopPropagation(); payNow()" *ngIf="!isPaidUser()">
       Pay ₹{{ courseData?.price }}
     </button>
   </div>
 
-  <!-- COURSE DETAIL — sirf click karne pe dikhega -->
+  <!-- COURSE DETAIL -->
   <div class="course-page" *ngIf="showDetail">
 
-    <!-- CLOSE BUTTON -->
-    <button class="close-btn" (click)="toggleDetail()">✕ Close</button>
+    <!-- CLOSE -->
+    <div class="top-bar">
+  <button class="close-btn" (click)="toggleDetail()">← Back</button>
+</div>
+    <!-- 🎥 VIDEO PREVIEW (YAHI SAHI JAGAH) -->
+    <div class="video-preview">
+      <iframe 
+        src="https://www.youtube.com/embed/watch?v=PYmKIMwXsSg&list=RDPYmKIMwXsSg&start_radio=1"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+    </div>
 
     <!-- HEADER -->
     <div class="course-header">
       <h1>{{ courseData?.title }}</h1>
+
+      <!-- ⭐ RATING -->
+      <div class="rating">
+        ⭐ 4.6 (1200 reviews) • 👨‍🎓 5,000 Students
+      </div>
+
       <p>{{ courseData?.description }}</p>
       <span class="badge">Class 9–10</span>
     </div>
 
-    <!-- COURSE INFO -->
+    <!-- INFO -->
     <div class="info-box">
       <div>
         <strong>Teacher</strong>
@@ -43,27 +61,78 @@
       </div>
     </div>
 
-    <!-- CHAPTER LIST -->
+    <!-- FEATURES -->
+    <div class="features">
+      <h3>What you'll get</h3>
+      <ul>
+        <li>📹 50+ Video Lectures</li>
+        <li>📝 Practice Tests</li>
+        <li>📜 Certificate</li>
+        <li>📱 Lifetime Access</li>
+      </ul>
+    </div>
+
+    <!-- CHAPTERS -->
     <div class="chapters">
       <h3>Course Content</h3>
-      <div
+
+      <!-- <div
         class="chapter"
         *ngFor="let ch of courseData?.chapters"
         [class.locked]="!ch.free && !isPaid"
       >
         <span>{{ ch.name }}</span>
+
         <span class="status" *ngIf="ch.free">FREE</span>
-        <span class="status lock" *ngIf="!ch.free && !isPaid">🔒 Locked</span>
+
+        <span class="status lock" *ngIf="!ch.free && !isPaid">
+          🔒 Locked – Buy to unlock
+        </span>
+
         <span class="status unlock" *ngIf="isPaid">▶ Watch</span>
+      </div> -->
+
+      <div
+  class="chapter"
+  *ngFor="let ch of courseData?.chapters"
+  (click)="selectVideo(ch)"
+  [class.active]="selectedChapter === ch"
+  [class.locked]="!ch.free && !isPaid"
+>
+  <span>{{ ch.name }}</span>
+
+  <span *ngIf="ch.free">FREE</span>
+
+  <span *ngIf="!ch.free && !isPaid">
+    🔒 Locked
+  </span>
+
+  <span *ngIf="isPaid">▶ Watch</span>
+</div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="reviews">
+      <h3>Student Reviews</h3>
+
+      <div class="review">
+        ⭐⭐⭐⭐⭐
+        <p>Best course for boards preparation!</p>
+        <small>- Rahul</small>
+      </div>
+
+      <div class="review">
+        ⭐⭐⭐⭐☆
+        <p>Very helpful explanations.</p>
+        <small>- Priya</small>
       </div>
     </div>
 
-    <!-- BUY BUTTON -->
+    <!-- BUY -->
     <button class="buy-btn" *ngIf="!isPaidUser()" (click)="payNow()">
       Buy Course ₹{{ courseData?.price }}
     </button>
 
-    <!-- DOWNLOAD INVOICE -->
     <button class="buy-btn" *ngIf="isPaidUser()" (click)="downloadInvoice()">
       Download Invoice PDF
     </button>

@@ -2,12 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CourseCardComponent } from '../shared/components/course-card/course-card.component';
 import { CommonModule } from '@angular/common';
 import { AiChatComponent } from "../ai-chat/ai-chat.component";
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CourseCardComponent, CommonModule, AiChatComponent],
+  imports: [CourseCardComponent, CommonModule, AiChatComponent,RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

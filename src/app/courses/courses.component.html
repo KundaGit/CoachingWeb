@@ -9,9 +9,13 @@
 
 <h2>All Courses</h2>
 
-<div class="course-grid">
-  <app-course-card 
-    *ngFor="let course of filteredCourses"  
-    [courseData]="course">
-  </app-course-card>
-</div>
+<app-course-card 
+  *ngFor="let course of filteredCourses"  
+  [courseData]="course"
+  [isExpanded]="expandedSlug === course.slug"
+  (opened)="onCourseOpen(course.slug)">
+</app-course-card>
+
+<!-- DEBUG OUTSIDE -->
+<pre *ngFor="let course of filteredCourses">
+</pre>

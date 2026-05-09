@@ -33,6 +33,11 @@ export const routes: Routes = [
   { path: 'courses', component: CoursesComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: 'quiz/:slug', component: QuizComponent, canActivate: [authGuard] },
+  {
+  path: 'dashboard',
+  loadComponent: () => import('./pages/dashboard/dashboard.component')
+    .then(m => m.DashboardComponent)
+},
 
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ]

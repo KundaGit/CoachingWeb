@@ -105,10 +105,9 @@ onOtpChange() {
           timerProgressBar: true,
           backdrop: 'rgba(0,0,0,0.4)'
         })
-       .then(() => {
-  // ✅ returnUrl check karo, nahi toh /home
+.then(() => {
   const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
-  this.router.navigate([returnUrl]);
+  this.router.navigateByUrl(returnUrl); // ← navigate ke bajaye navigateByUrl use karo
 });
       },
       error: () =>this.triggerOtpError()

@@ -1,0 +1,33 @@
+<div class="dashboard">
+
+  <h2>👋 Welcome, {{ userEmail }}</h2>
+
+  <h3>📚 My Courses</h3>
+
+<div *ngIf="purchasedCourses.length === 0">
+  <p>No courses yet 😢</p>
+  <button routerLink="/courses">Explore Courses</button>
+</div>
+
+  <div class="course-list">
+    <div class="course-card" *ngFor="let c of purchasedCourses">
+
+      <h4>{{ c.title }}</h4>
+
+     <div class="progress-bar">
+  <div class="progress-fill" style="width: 40%"></div>
+</div>
+<p>40% Completed</p>
+
+      <button [routerLink]="['/course', c.slug]">
+        Continue Learning ▶
+      </button>
+
+      <button [routerLink]="['/quiz', c.slug]">
+        Take Quiz 📝
+      </button>
+
+    </div>
+  </div>
+
+</div>

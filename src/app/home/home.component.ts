@@ -71,13 +71,13 @@ closeModal() {
       teacher: 'PW Faculty',
       duration: '12 Months',
       slug: 'class-10-maths',
-      chapters: [
-        { name: 'Real Numbers', free: true },
-        { name: 'Polynomials', free: false },
-        { name: 'Linear Equations', free: false },
-        { name: 'Quadratic Equations', free: false },
-        { name: 'Statistics', free: false }
-      ]
+   chapters: [
+  { name: 'Real Numbers', free: true, video: 'https://www.youtube.com/embed/watch?v=ERQq66b304U&list=RDERQq66b304U&start_radio=1' },
+  { name: 'Polynomials', free: false, video: 'https://www.youtube.com/embed/watch?v=EeCaXFKRPZ0&list=RDEeCaXFKRPZ0&start_radio=1' },
+  { name: 'Linear Equations', free: false, video: 'https://www.youtube.com/embed/VIDEO_ID' },
+  { name: 'Quadratic Equations', free: false, video: 'https://www.youtube.com/embed/VIDEO_ID' },
+  { name: 'Statistics', free: false, video: 'https://www.youtube.com/embed/VIDEO_ID' }
+],
     },
     {
       title: 'Class 10 Science',
@@ -86,12 +86,28 @@ closeModal() {
       teacher: 'PW Faculty',
       duration: '12 Months',
       slug: 'class-10-science',
-      chapters: [
-        { name: 'Light', free: true },
-        { name: 'Electricity', free: false },
-        { name: 'Chemical Reactions', free: false },
-        { name: 'Life Processes', free: false }
-      ]
+   chapters: [
+  {
+    name: 'Light',
+    free: true,
+    video: 'https://www.youtube.com/embed/1muJQdq6VV8'
+  },
+  {
+    name: 'Electricity',
+    free: false,
+    video: 'https://www.youtube.com/embed/ysz5S6PUM-U'
+  },
+  {
+    name: 'Chemical Reactions',
+    free: false,
+    video: 'https://www.youtube.com/embed/2Vv-BfVoq4g'
+  },
+  {
+    name: 'Life Processes',
+    free: false,
+    video: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+  }
+]
     },
     {
       title: 'Class 9 Maths',
@@ -100,13 +116,31 @@ closeModal() {
       teacher: 'PW Faculty',
       duration: '12 Months',
       slug: 'class-9-maths',
-      chapters: [
-        { name: 'Number Systems', free: true },
-        { name: 'Polynomials', free: false },
-        { name: 'Coordinate Geometry', free: false }
-      ]
+    chapters: [
+  {
+    name: 'Number Systems',
+    free: true,
+    video: 'https://www.youtube.com/embed/ERQq66b304U'
+  },
+  {
+    name: 'Polynomials',
+    free: false,
+    video: 'https://www.youtube.com/embed/EeCaXFKRPZ0'
+  },
+  {
+    name: 'Coordinate Geometry',
+    free: false,
+    video: 'https://www.youtube.com/embed/1muJQdq6VV8'
+  }
+]
     }
   ];
+
+  expandedSlug: string | null = null;
+
+onCourseOpen(slug: string) {
+  this.expandedSlug = slug;
+}
 
   ngOnInit() {
     this.intervalId = setInterval(() => {

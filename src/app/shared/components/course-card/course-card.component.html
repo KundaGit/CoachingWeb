@@ -7,9 +7,11 @@
 
     <button>View Course</button>
 
-    <button (click)="$event.stopPropagation(); goToQuiz()">
-      📝 Take Quiz
-    </button>
+<button 
+  *ngIf="courseData?.slug"
+  (click)="$event.stopPropagation(); goToQuiz()">
+  📝 Take Quiz
+</button>
 
     <button (click)="$event.stopPropagation(); payNow()" *ngIf="!isPaidUser()">
       Pay ₹{{ courseData?.price }}
@@ -24,13 +26,25 @@
   <button class="close-btn" (click)="toggleDetail()">← Back</button>
 </div>
     <!-- 🎥 VIDEO PREVIEW (YAHI SAHI JAGAH) -->
-    <div class="video-preview">
+    <!-- <div class="video-preview">
       <iframe 
         src="https://www.youtube.com/embed/watch?v=PYmKIMwXsSg&list=RDPYmKIMwXsSg&start_radio=1"
         frameborder="0"
         allowfullscreen>
       </iframe>
-    </div>
+    </div> -->
+  
+<div class="video-preview" *ngIf="currentVideo">
+  <iframe 
+    [src]="currentVideo"
+    width="100%"
+    height="220"
+    frameborder="0"
+    id="videoPlayer"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+  </iframe>
+</div>
 
     <!-- HEADER -->
     <div class="course-header">
@@ -76,23 +90,7 @@
     <div class="chapters">
       <h3>Course Content</h3>
 
-      <!-- <div
-        class="chapter"
-        *ngFor="let ch of courseData?.chapters"
-        [class.locked]="!ch.free && !isPaid"
-      >
-        <span>{{ ch.name }}</span>
-
-        <span class="status" *ngIf="ch.free">FREE</span>
-
-        <span class="status lock" *ngIf="!ch.free && !isPaid">
-          🔒 Locked – Buy to unlock
-        </span>
-
-        <span class="status unlock" *ngIf="isPaid">▶ Watch</span>
-      </div> -->
-
-      <div
+        <div
   class="chapter"
   *ngFor="let ch of courseData?.chapters"
   (click)="selectVideo(ch)"

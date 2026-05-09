@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import jsPDF from 'jspdf';
 interface Question {
   question: string;
   options: string[];
@@ -105,6 +106,7 @@ quizData: { [key: string]: Question[] } = {
     ]
   };
 
+
   get questions(): Question[] {
     return this.quizData[this.slug] || [];
   }
@@ -122,11 +124,114 @@ quizData: { [key: string]: Question[] } = {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    this.slug = this.route.snapshot.params['slug'];
-    this.answers = new Array(this.totalQuestions).fill(null);
-  }
+  // Image code for certificate
+  loadImage(url: string): Promise<string> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.src = url;
 
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(img, 0, 0);
+
+      resolve(canvas.toDataURL('image/png'));
+    };
+  });
+}
+
+async downloadCertificate() {
+
+  const doc = new jsPDF('landscape');
+
+  const name = localStorage.getItem('userEmail') || 'Student';
+  const course = this.slug.replace(/-/g, ' ').toUpperCase();
+  const date = new Date().toLocaleDateString();
+
+  // 🖼 LOAD IMAGES
+  const logo = await this.loadImage('assets/Kundanlogo.png');
+  const seal = await this.loadImage('assets/seal.jpg');
+
+  // 🎨 BORDER
+  doc.setDrawColor(99, 102, 241);
+  doc.setLineWidth(4);
+  doc.rect(10, 10, 277, 190);
+
+  doc.setDrawColor(200);
+  doc.setLineWidth(1);
+  doc.rect(15, 15, 267, 180);
+
+  // 🏫 LOGO (TOP LEFT)
+  doc.addImage(logo, 'PNG', 20, 20, 30, 30);
+
+  // 🏅 GOLD SEAL (RIGHT)
+doc.addImage(seal, 'jpg', 210, 110, 35, 35);
+
+  // 🎓 TITLE
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(30);
+  doc.setTextColor(79, 70, 229);
+  doc.text('CERTIFICATE', 148, 40, { align: 'center' });
+
+  doc.setFontSize(18);
+  doc.setTextColor(0);
+  doc.text('OF COMPLETION', 148, 55, { align: 'center' });
+
+  // 📜 TEXT
+  doc.setFontSize(14);
+  doc.text('This certificate is proudly awarded to', 148, 80, { align: 'center' });
+
+  // 👤 NAME
+  doc.setFontSize(24);
+  doc.setTextColor(16, 185, 129);
+  doc.text(name, 148, 100, { align: 'center' });
+
+  // 📚 COURSE
+  doc.setFontSize(14);
+  doc.setTextColor(0);
+  doc.text('for successfully completing the course', 148, 115, { align: 'center' });
+
+  doc.setFontSize(20);
+  doc.setFont('helvetica', 'bold');
+  doc.text(course, 148, 130, { align: 'center' });
+
+  // 🎯 SCORE
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'normal');
+  doc.text(`Score: ${this.score}/${this.totalQuestions}`, 148, 145, { align: 'center' });
+
+  // 📅 DATE
+  doc.setFontSize(12);
+  doc.text(`Date: ${date}`, 40, 180);
+
+  // ✍️ SIGNATURE
+  doc.line(200, 170, 260, 170);
+  doc.text('Authorized Signature', 230, 180, { align: 'center' });
+
+  // 🏆 FOOTER
+  doc.setFontSize(10);
+  doc.setTextColor(120);
+  doc.text('Kundan Institute • Empowering Students', 148, 190, { align: 'center' });
+
+  doc.save('certificate.pdf');
+}
+
+ ngOnInit() {
+  this.route.params.subscribe(params => {
+    this.slug = params['slug'];
+
+    if (!this.slug || !this.quizData[this.slug]) {
+      console.error('❌ Invalid slug', this.slug);
+      return;
+    }
+
+    this.answers = new Array(this.quizData[this.slug].length).fill(null);
+  });
+}
   selectAnswer(index: number) {
     if (this.selectedAnswer !== null) return; // already answered
     this.selectedAnswer = index;

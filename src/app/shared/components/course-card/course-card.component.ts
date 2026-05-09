@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -16,28 +16,56 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class CourseCardComponent implements OnInit {
 
   @Input() courseData: any;
+    @Input() isExpanded: boolean = false;
+@Output() opened = new EventEmitter<void>();
 
   userEmail: string = '';
   isPaid: boolean = false;
   currentVideo!: SafeResourceUrl;
   selectedChapter: any;
   showDetail = false; // ✅ toggle ke liye
+  
+
 
 toggleDetail() {
+   this.opened.emit();
   this.showDetail = !this.showDetail;
-   if (this.showDetail && this.courseData?.chapters?.length) {
-      this.currentVideo = this.sanitizer.bypassSecurityTrustResourceUrl(
-        this.courseData.chapters[0].video
-      );
-    }
-}
 
- selectVideo(ch: any) {
-    if (ch.free || this.isPaid) {
-      this.selectedChapter = ch;
-      this.currentVideo = this.sanitizer.bypassSecurityTrustResourceUrl(ch.video);
+  if (this.showDetail && this.courseData?.chapters?.length) {
+    this.selectedChapter = this.courseData.chapters[0];
+
+    const videoUrl = this.courseData.chapters[0].video;
+    if (videoUrl) {  // ← sirf tab set karo jab video ho
+      this.currentVideo = this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl);
     }
   }
+}
+ngOnChanges() {
+  if (!this.isExpanded) {
+    this.showDetail = false;
+  }
+}
+
+selectVideo(ch: any) {
+  if (ch.free || this.isPaid) {
+    this.selectedChapter = ch;
+
+    this.currentVideo = this.sanitizer.bypassSecurityTrustResourceUrl(ch.video);
+  // 👇 AUTO SCROLL TO VIDEO
+    setTimeout(() => {
+      const el = document.getElementById('videoPlayer');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+    // ✅ SAVE LAST VIDEO
+    localStorage.setItem(
+      `lastVideo_${this.courseData.slug}`,
+      JSON.stringify(ch)
+    );
+  }
+   console.log("VIDEO SWITCH 👉", ch.video); // 👈 debug
+}
   get course() {
     return this.courseData;
   }
@@ -52,11 +80,65 @@ toggleDetail() {
   ngOnInit() {
     this.userEmail = localStorage.getItem('userEmail') || '';
     this.isPaid = localStorage.getItem(`isPaid_${this.courseData?.slug}`) === 'true';
+    console.log('Course Data 👉', this.courseData); // 👈 yaha daal
   }
   
-goToQuiz() {
-  this.router.navigate(['/quiz', this.courseData.slug]);
+
+  player: any;
+
+ngAfterViewInit() {
+  (window as any).onYouTubeIframeAPIReady = () => {
+    this.player = new (window as any).YT.Player('player', {
+      events: {
+        onStateChange: (event: any) => {
+          if (event.data === 0) {
+            this.playNextVideo(); // 🎯 video end
+          }
+        }
+      }
+    });
+  };
 }
+
+playNextVideo() {
+  const index = this.courseData.chapters.findIndex(
+    (c: any) => c === this.selectedChapter
+  );
+
+  const next = this.courseData.chapters[index + 1];
+
+  if (next && (next.free || this.isPaid)) {
+    this.selectVideo(next);
+  }
+}
+
+saveProgress(ch: any) {
+  const key = `progress_${this.courseData.slug}`;
+  let progress = JSON.parse(localStorage.getItem(key) || '[]');
+
+  if (!progress.includes(ch.name)) {
+    progress.push(ch.name);
+  }
+
+  localStorage.setItem(key, JSON.stringify(progress));
+}
+// goToQuiz() {
+//   this.router.navigate(['/quiz', this.courseData.slug]);
+// }
+
+goToQuiz() {
+  console.log('👉 courseData:', this.courseData);
+
+  const slug = this.courseData?.slug;
+
+  if (!slug) {
+    alert('❌ Slug missing — check console');
+    return;
+  }
+
+  this.router.navigate(['/quiz', slug]);
+}
+
   // ─── PAY NOW ───
   payNow() {
 

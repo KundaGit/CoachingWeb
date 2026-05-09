@@ -71,10 +71,12 @@
 
 <!-- ✅ HONA CHAHIYE - data ke saath -->
 <div class="course-grid">
-  <app-course-card 
-    *ngFor="let course of courses" 
-    [courseData]="course">
-  </app-course-card>
+ <app-course-card 
+  *ngFor="let course of courses" 
+  [courseData]="course"
+  [isExpanded]="expandedSlug === course.slug"
+  (opened)="onCourseOpen(course.slug)">
+</app-course-card>
 </div>
 
 <!-- STATS MODAL -->

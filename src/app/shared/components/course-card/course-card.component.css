@@ -166,4 +166,9 @@
   color: #6a5af9;
 }
 
+.chapter.active {
+  background: #dbeafe;
+  border-left: 4px solid #2563eb;
+}
+
 

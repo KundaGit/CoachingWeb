@@ -793,4 +793,27 @@
 }
 
 
+.bottom-nav a.active {
+  color: #2563eb;
+  font-weight: 600;
+}
 
+.bottom-nav a.active span {
+  transform: scale(1.1);
+}
+
+/* 💻 DESKTOP NAV */
+@media (min-width: 768px) {
+  .bottom-nav {
+    left: 0;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+
+    bottom: 0;
+    height: 60px;
+
+    justify-content: space-evenly;
+  }
+}

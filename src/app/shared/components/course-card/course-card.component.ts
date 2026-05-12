@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import Swal from 'sweetalert2';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @Component({
   selector: 'app-course-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,PdfViewerModule],
   templateUrl: './course-card.component.html',
   styleUrl: './course-card.component.css'
 })
@@ -24,6 +25,10 @@ export class CourseCardComponent implements OnInit {
   currentVideo!: SafeResourceUrl;
   selectedChapter: any;
   showDetail = false; // ✅ toggle ke liye
+  showPdfViewer = false; // ✅ PDF viewer toggle
+  selectedPdf: string = ''; // ✅ current PDF path
+  completedChapters: string[] = [];
+  progress = 0; 
   
 
 
@@ -40,6 +45,15 @@ toggleDetail() {
     }
   }
 }
+
+openPdf(pdf: string) {
+  this.selectedPdf = pdf;
+  this.showPdfViewer = true;
+}
+
+closePdf() {
+  this.showPdfViewer = false;
+}
 ngOnChanges() {
   if (!this.isExpanded) {
     this.showDetail = false;
@@ -47,24 +61,42 @@ ngOnChanges() {
 }
 
 selectVideo(ch: any) {
+
   if (ch.free || this.isPaid) {
+
     this.selectedChapter = ch;
 
-    this.currentVideo = this.sanitizer.bypassSecurityTrustResourceUrl(ch.video);
-  // 👇 AUTO SCROLL TO VIDEO
+    this.currentVideo =
+      this.sanitizer.bypassSecurityTrustResourceUrl(ch.video);
+
+    // ✅ progress save
+    if (!this.completedChapters.includes(ch.name)) {
+      this.completedChapters.push(ch.name);
+    }
+
+    // ✅ calculate %
+    this.progress =
+      (this.completedChapters.length /
+        this.courseData.chapters.length) * 100;
+
+    // ✅ local storage
+    localStorage.setItem(
+      `progress_${this.courseData.slug}`,
+      JSON.stringify(this.completedChapters)
+    );
+
     setTimeout(() => {
       const el = document.getElementById('videoPlayer');
+
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
       }
+
     }, 100);
-    // ✅ SAVE LAST VIDEO
-    localStorage.setItem(
-      `lastVideo_${this.courseData.slug}`,
-      JSON.stringify(ch)
-    );
   }
-   console.log("VIDEO SWITCH 👉", ch.video); // 👈 debug
 }
   get course() {
     return this.courseData;
@@ -81,6 +113,20 @@ selectVideo(ch: any) {
     this.userEmail = localStorage.getItem('userEmail') || '';
     this.isPaid = localStorage.getItem(`isPaid_${this.courseData?.slug}`) === 'true';
     console.log('Course Data 👉', this.courseData); // 👈 yaha daal
+    // ✅ LOAD PROGRESS
+
+const saved = localStorage.getItem(
+  `progress_${this.courseData.slug}`
+);
+
+if (saved) {
+
+  this.completedChapters = JSON.parse(saved);
+
+  this.progress =
+    (this.completedChapters.length /
+      this.courseData.chapters.length) * 100;
+}
   }
   
 

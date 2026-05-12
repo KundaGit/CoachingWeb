@@ -50,6 +50,14 @@
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
 }
+.expanded-layout {
+  display: block !important;
+}
+
+.expanded-layout app-course-card {
+  display: block;
+  width: 100%;
+}
 
 /* Slide shower */
 
@@ -414,4 +422,260 @@
 }
 
 
+.expanded-layout {
+  display: block !important;
+}
+
+.theme-btn {
+  margin-top: 14px;
+  margin-left: 12px;
+
+  padding: 12px 18px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #111827;
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+.theme-btn:hover {
+  transform: translateY(-2px);
+}
+/* 🔴 LIVE CLASS PREMIUM STYLE */
+
+.live-class {
+  position: relative;
+  margin: 28px 0;
+  padding: 28px;
+  border-radius: 24px;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #140101,
+      #2a0202,
+      #450505
+    );
+
+  border: 1px solid rgba(255,0,0,0.25);
+
+  box-shadow:
+    0 0 20px rgba(255,0,0,0.15),
+    0 0 40px rgba(255,0,0,0.12);
+
+  animation: liveGlow 2s infinite alternate;
+}
+
+/* background glow */
+
+.live-class::before {
+  content: '';
+
+  position: absolute;
+  width: 260px;
+  height: 260px;
+
+  background: rgba(255,0,0,0.12);
+
+  border-radius: 50%;
+
+  top: -100px;
+  right: -80px;
+
+  filter: blur(20px);
+}
+
+/* LIVE BADGE */
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  background: rgba(255,255,255,0.08);
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  color: white;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 18px;
+
+  backdrop-filter: blur(8px);
+}
+
+/* RED BLINKING DOT */
+
+.live-badge::before {
+  content: '';
+
+  width: 12px;
+  height: 12px;
+
+  border-radius: 50%;
+
+  background: red;
+
+  animation: blinkLive 1s infinite;
+}
+
+/* TITLE */
+
+.live-title {
+  color: white;
+
+  font-size: 34px;
+  font-weight: 800;
+
+  margin-bottom: 18px;
+
+  line-height: 1.2;
+}
+
+/* INFO */
+
+.live-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+
+  margin-bottom: 24px;
+}
+
+.live-info span {
+  background: rgba(255,255,255,0.08);
+
+  padding: 10px 16px;
+
+  border-radius: 12px;
+
+  color: #f3f4f6;
+
+  font-size: 14px;
+
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* BUTTON */
+
+.join-live-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 14px 24px;
+
+  border-radius: 14px;
+
+  text-decoration: none;
+
+  font-weight: 700;
+
+  color: white;
+
+  background: linear-gradient(
+    90deg,
+    #ff0000,
+    #ff3b3b
+  );
+
+  box-shadow:
+    0 0 15px rgba(255,0,0,0.45);
+
+  transition: 0.3s ease;
+}
+
+.join-live-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+
+  box-shadow:
+    0 0 25px rgba(255,0,0,0.7);
+}
+
+/* PULSE RING */
+
+.join-live-btn::after {
+  content: '';
+
+  position: absolute;
+
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+}
+
+/* LIVE GLOW */
+
+@keyframes liveGlow {
+
+  from {
+    box-shadow:
+      0 0 18px rgba(255,0,0,0.15),
+      0 0 30px rgba(255,0,0,0.10);
+  }
+
+  to {
+    box-shadow:
+      0 0 28px rgba(255,0,0,0.35),
+      0 0 60px rgba(255,0,0,0.25);
+  }
+}
+
+/* BLINK */
+
+@keyframes blinkLive {
+
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.3;
+    transform: scale(1.4);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .live-class {
+    padding: 20px;
+  }
+
+  .live-title {
+    font-size: 24px;
+  }
+
+  .live-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .join-live-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
 

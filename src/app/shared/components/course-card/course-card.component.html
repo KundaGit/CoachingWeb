@@ -1,17 +1,17 @@
 <ng-container *ngIf="courseData">
-
   <!-- SMALL CARD -->
- <div class="card" *ngIf="!showDetail" (click)="toggleDetail()">
+  <div class="card" *ngIf="!showDetail" (click)="toggleDetail()">
     <h4>{{ courseData?.title }}</h4>
     <p>{{ courseData?.description }}</p>
 
     <button>View Course</button>
 
-<button 
-  *ngIf="courseData?.slug"
-  (click)="$event.stopPropagation(); goToQuiz()">
-  📝 Take Quiz
-</button>
+    <button
+      *ngIf="courseData?.slug"
+      (click)="$event.stopPropagation(); goToQuiz()"
+    >
+      📝 Take Quiz
+    </button>
 
     <button (click)="$event.stopPropagation(); payNow()" *ngIf="!isPaidUser()">
       Pay ₹{{ courseData?.price }}
@@ -20,11 +20,10 @@
 
   <!-- COURSE DETAIL -->
   <div class="course-page" *ngIf="showDetail">
-
     <!-- CLOSE -->
     <div class="top-bar">
-  <button class="close-btn" (click)="toggleDetail()">← Back</button>
-</div>
+      <button class="close-btn" (click)="toggleDetail()">← Back</button>
+    </div>
     <!-- 🎥 VIDEO PREVIEW (YAHI SAHI JAGAH) -->
     <!-- <div class="video-preview">
       <iframe 
@@ -33,27 +32,26 @@
         allowfullscreen>
       </iframe>
     </div> -->
-  
-<div class="video-preview" *ngIf="currentVideo">
-  <iframe 
-    [src]="currentVideo"
-    width="100%"
-    height="220"
-    frameborder="0"
-    id="videoPlayer"
-    allow="autoplay; encrypted-media"
-    allowfullscreen>
-  </iframe>
-</div>
+
+    <div class="video-preview" *ngIf="currentVideo">
+      <iframe
+        [src]="currentVideo"
+        width="100%"
+        height="220"
+        frameborder="0"
+        id="videoPlayer"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+      >
+      </iframe>
+    </div>
 
     <!-- HEADER -->
     <div class="course-header">
       <h1>{{ courseData?.title }}</h1>
 
       <!-- ⭐ RATING -->
-      <div class="rating">
-        ⭐ 4.6 (1200 reviews) • 👨‍🎓 5,000 Students
-      </div>
+      <div class="rating">⭐ 4.6 (1200 reviews) • 👨‍🎓 5,000 Students</div>
 
       <p>{{ courseData?.description }}</p>
       <span class="badge">Class 9–10</span>
@@ -85,29 +83,132 @@
         <li>📱 Lifetime Access</li>
       </ul>
     </div>
+<!-- LIVE CLASS PREMIUM -->
+<div class="live-class" *ngIf="courseData?.liveClass">
+
+  <!-- LIVE BADGE -->
+  <div class="live-top">
+
+    <div class="live-indicator">
+      <span class="live-dot"></span>
+      LIVE NOW
+    </div>
+
+    <div class="live-viewers">
+      👀 1.2K Watching
+    </div>
+
+  </div>
+
+  <!-- TITLE -->
+  <h2 class="live-title">
+    {{ courseData.liveClass.title }}
+  </h2>
+
+  <!-- TEACHER -->
+  <div class="live-info">
+    👨‍🏫 {{ courseData.liveClass.teacher }}
+  </div>
+
+  <!-- DATE -->
+  <div class="live-info">
+    📅 {{ courseData.liveClass.date }}
+  </div>
+
+  <!-- TIME -->
+  <div class="live-info">
+    ⏰ {{ courseData.liveClass.time }}
+  </div>
+
+  <!-- BUTTON -->
+  <a
+    [href]="courseData.liveClass.meetingLink"
+    target="_blank"
+    class="join-live-btn"
+  >
+    🚀 Join Live Class
+  </a>
+
+</div>
+    <!-- PROGRESS -->
+
+<div class="progress-box">
+
+  <div class="progress-top">
+
+    <span>📘 Course Progress</span>
+
+    <span>
+      {{ progress | number:'1.0-0' }}%
+    </span>
+
+  </div>
+
+  <div class="progress-bar">
+
+    <div
+      class="progress-fill"
+      [style.width.%]="progress"
+    ></div>
+
+  </div>
+
+</div>
 
     <!-- CHAPTERS -->
-    <div class="chapters">
-      <h3>Course Content</h3>
-
-        <div
+   <div class="chapters-container">
+  <div
   class="chapter"
   *ngFor="let ch of courseData?.chapters"
-  (click)="selectVideo(ch)"
   [class.active]="selectedChapter === ch"
-  [class.locked]="!ch.free && !isPaid"
 >
-  <span>{{ ch.name }}</span>
 
-  <span *ngIf="ch.free">FREE</span>
+  <!-- HEADER -->
+  <div class="chapter-header" (click)="selectVideo(ch)">
 
-  <span *ngIf="!ch.free && !isPaid">
-    🔒 Locked
-  </span>
+    <div class="chapter-left">
 
-  <span *ngIf="isPaid">▶ Watch</span>
-</div>
+      <h4>{{ ch.name }}</h4>
+
+      <span class="free-tag" *ngIf="ch.free">
+        FREE
+      </span>
+
+      <span class="locked-tag" *ngIf="!ch.free && !isPaid">
+        🔒 Locked
+      </span>
+
     </div>
+
+    <div class="watch-btn">
+      ▶ Watch
+    </div>
+
+  </div>
+
+  <!-- NOTES BUTTONS -->
+  <div class="notes-actions" *ngIf="ch.pdf">
+
+    <button
+      class="view-btn"
+      (click)="openPdf(ch.pdf)"
+    >
+      📄 View Notes
+    </button>
+
+    <a
+      [href]="ch.pdf"
+      download
+      class="download-btn"
+    >
+      ⬇ Download PDF
+    </a>
+
+  </div>
+
+</div>
+</div>
+
 
     <!-- REVIEWS -->
     <div class="reviews">
@@ -134,7 +235,32 @@
     <button class="buy-btn" *ngIf="isPaidUser()" (click)="downloadInvoice()">
       Download Invoice PDF
     </button>
+  </div>
+  <!-- PDF VIEWER -->
+
+<div class="pdf-modal" *ngIf="showPdfViewer">
+
+  <div class="pdf-header">
+
+    <button (click)="closePdf()">
+      ✖ Close
+    </button>
 
   </div>
 
+ <div class="pdf-container">
+
+  <pdf-viewer
+    [src]="selectedPdf"
+    [render-text]="true"
+    [original-size]="false"
+    [fit-to-page]="true"
+    [show-all]="true"
+    style="width:100%;height:100%;display:block;"
+  >
+  </pdf-viewer>
+
+</div>
+
+</div>
 </ng-container>

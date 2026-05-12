@@ -23,7 +23,14 @@
   <h1>Learn Better. Score Higher.</h1>
   <p>Class 9–10 | Maths & Science</p>
   <button class="primary-btn" (click)="testClick()">Explore Courses</button>
+  <button
+  class="theme-btn"
+  (click)="toggleDarkMode()"
+>
+  {{ darkMode ? '☀️ Light Mode' : '🌙 Dark Mode' }}
+</button>
 </section>
+
 <!-- FEATURES SECTION -->
 <section class="features">
   <h2 class="features-title">Why Choose Us?</h2>
@@ -67,10 +74,11 @@
 
   </div>
 </section>
+
 <h2 class="section-title">Popular Courses</h2>
 
 <!-- ✅ HONA CHAHIYE - data ke saath -->
-<div class="course-grid">
+<div class="course-grid" [class.expanded-layout]="expandedSlug">
  <app-course-card 
   *ngFor="let course of courses" 
   [courseData]="course"

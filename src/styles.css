@@ -162,3 +162,79 @@ a {
     padding: 20px;
   }
 }
+
+/* DARK MODE */
+
+.dark-theme {
+  background: #0f172a;
+  color: white;
+}
+
+.dark-theme .card,
+.dark-theme .chapter,
+.dark-theme .feature-card,
+.dark-theme .info-box div,
+.dark-theme .review,
+.dark-theme .stats-modal,
+.dark-theme .hero {
+  background: #1e293b;
+  color: white;
+}
+
+.dark-theme .course-page {
+  background: #0f172a;
+}
+
+.dark-theme p,
+.dark-theme li,
+.dark-theme small {
+  color: #cbd5e1;
+}
+
+.dark-theme .progress-bar {
+  background: #334155;
+}
+/* DARK MODE FIX */
+
+.dark-theme .info-box div {
+  background: #1e293b !important;
+  color: white !important;
+}
+
+.dark-theme .info-box p,
+.dark-theme .info-box strong {
+  color: white !important;
+}
+
+.dark-theme .badge {
+  background: #312e81;
+  color: #fff;
+}
+
+.dark-theme .chapter {
+  background: #1e293b;
+  color: white;
+}
+
+.dark-theme .review {
+  background: #1e293b;
+  color: white;
+}
+
+.dark-theme .course-header p,
+.dark-theme .features li,
+.dark-theme small {
+  color: #cbd5e1 !important;
+}
+
+.dark-theme .watch-btn {
+  color: #818cf8;
+}
+
+.dark-theme .buy-btn {
+  background: linear-gradient(
+    90deg,
+    #6366f1,
+    #8b5cf6
+  );
+}

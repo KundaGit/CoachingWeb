@@ -11,6 +11,8 @@ import { QuizComponent } from './quiz/quiz.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { TermsComponent } from './pages/terms/terms.component';
 import { RefundPolicyComponent } from './pages/refund-policy/refund-policy.component';
+import { MockTestComponent } from './pages/mock-test/mock-test.component';
+import { MockResultComponent } from './pages/mock-result/mock-result.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,6 +27,12 @@ export const routes: Routes = [
     // ❌ canActivate hatao yahan se
   children: [
   { path: 'home', component: HomeComponent },
+  {
+    path: 'mock-test',component: MockTestComponent
+  },
+  {
+    path: 'mock-result', component: MockResultComponent
+  },
 
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'terms', component: TermsComponent },

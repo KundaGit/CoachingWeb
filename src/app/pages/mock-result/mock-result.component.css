@@ -1,0 +1,21 @@
+  .result-page {
+  min-height: 100vh;
+  background: #0f172a;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-card {
+  background: #111827;
+  padding: 30px;
+  border-radius: 16px;
+  width: 350px;
+  text-align: center;
+}
+
+.result-card p {
+  margin-top: 12px;
+}

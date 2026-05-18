@@ -1,0 +1,165 @@
+<div class="exam-container">
+
+  <!-- TOP BAR -->
+
+  <div class="top-bar">
+
+    <div class="exam-title">
+      🚆 CBT Mock Test
+    </div>
+
+    <div class="timer-box">
+
+      ⏱ {{ minutes }}:
+      {{ seconds < 10 ? '0' + seconds : seconds }}
+
+    </div>
+
+  </div>
+
+<div class="exam-warning">
+  ⚠ Do not refresh or switch tabs during exam
+</div>
+  <!-- MAIN LAYOUT -->
+
+  <div class="main-layout">
+
+    <!-- QUESTION AREA -->
+
+    <div class="question-section">
+
+      <div class="section-badge">
+
+        {{ currentQuestion.section }}
+
+      </div>
+
+      <h2 class="question-number">
+
+        Q{{ currentQuestion.id }}
+
+      </h2>
+
+      <div class="question-text">
+
+        {{ currentQuestion.question }}
+
+      </div>
+
+      <!-- OPTIONS -->
+
+      <div
+        class="option"
+
+        *ngFor="
+          let option of
+          currentQuestion.options
+        "
+
+        [class.selected]="
+          currentQuestion.selected === option
+        "
+
+        (click)="selectOption(option)"
+      >
+
+        {{ option }}
+
+      </div>
+
+      <!-- BUTTONS -->
+
+      <div class="action-buttons">
+
+        <button
+          class="prev-btn"
+          (click)="prevQuestion()"
+        >
+          ⬅ Previous
+        </button>
+
+        <button
+          class="review-btn"
+          (click)="markForReview()"
+        >
+          🔖 Mark Review
+        </button>
+
+        <button
+          class="next-btn"
+          (click)="nextQuestion()"
+        >
+          Next ➡
+        </button>
+
+      </div>
+
+      <!-- SUBMIT -->
+
+      <button
+        class="submit-btn"
+        (click)="submitTest()"
+      >
+        🚀 Submit Test
+      </button>
+
+    </div>
+
+    <!-- RIGHT SIDE PALETTE -->
+
+    <div class="palette-container">
+
+      <div class="palette-title">
+        Questions
+      </div>
+
+      <div class="palette-grid">
+
+        <div
+          class="palette-box"
+
+          *ngFor="
+            let q of questions;
+            let i = index
+          "
+
+          (click)="goToQuestion(i)"
+
+          [class.answered]="q.selected"
+
+          [class.review]="q.markedForReview"
+
+          [class.current]="
+            currentQuestionIndex === i
+          "
+        >
+
+          {{ i + 1 }}
+
+        </div>
+
+      </div>
+
+      <!-- LEGEND -->
+
+      <div class="legend">
+
+        <div>
+          🟢 Answered
+        </div>
+
+        <div>
+          🟡 Review
+        </div>
+
+        <div>
+          🔵 Current
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

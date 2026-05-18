@@ -1,0 +1,37 @@
+<div class="result-page">
+
+  <h1>
+    🏆 Exam Result
+  </h1>
+
+  <div class="result-card">
+
+    <h2>
+      Score: {{ result.score }}
+    </h2>
+
+    <p>
+      ✅ Correct:
+      {{ result.correct }}
+    </p>
+
+    <p>
+        ❌ Wrong:
+      {{ result.wrong }}
+    </p>
+
+    <p>
+      ⚪ Unanswered:
+      {{ result.unanswered }}
+    </p>
+
+    <p>
+      📈 Accuracy:
+      {{ result.accuracy }}%
+    </p><h3>
+      {{ result.rank }}
+    </h3>
+
+  </div>
+
+</div>

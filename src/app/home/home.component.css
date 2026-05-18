@@ -678,4 +678,104 @@
     justify-content: center;
   }
 }
+/*Online cbt test*/
+/* MOCK TEST */
+
+.mock-test-banner {
+
+  background:
+    linear-gradient(
+      135deg,
+      #111827,
+      #1e293b
+    );
+
+  color: white;
+
+  padding: 30px;
+
+  border-radius: 20px;
+
+  margin: 30px 0;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  flex-wrap: wrap;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.2);
+}
+
+.mock-left h2 {
+
+  font-size: 32px;
+
+  margin-bottom: 10px;
+}
+
+.mock-left p {
+
+  color: #cbd5e1;
+
+  max-width: 500px;
+
+  line-height: 1.6;
+}
+
+.mock-btn {
+
+  background: red;
+
+  border: none;
+
+  color: white;
+
+  padding: 16px 28px;
+
+  border-radius: 14px;
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media(max-width:768px){
+
+  .mock-test-banner {
+
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .mock-left h2 {
+
+    font-size: 26px;
+  }
+}
 
